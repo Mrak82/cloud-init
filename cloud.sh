@@ -4,10 +4,6 @@ export IMAGES_PATH="/var/lib/vz/images/9999" # defines the path where the images
 
 cd ${IMAGES_PATH}
 
-## Ubuntu 23.04 Lunar Lobster
-## https://cloud-images.ubuntu.com/
-# wget https://cloud-images.ubuntu.com/lunar/current/lunar-server-cloudimg-amd64.img
-
 export QEMU_CPU_MODEL="host" # Specifies the CPU model to be used for the VM according your environment and the desired CPU capabilities.
 export VM_CPU_SOCKETS=1
 export VM_CPU_CORES=4
