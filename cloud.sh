@@ -1,6 +1,17 @@
 #!/bin/bash
 
-export IMAGES_PATH="/var/lib/vz/images/9999" # defines the path where the images will be stored and change the path to it.
+
+mkdir /var/lib/vz/images/9999 
+
+cd /var/lib/vz/images/9999
+
+wget https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-generic-amd64.qcow2
+
+export IMAGES_PATH="/var/lib/vz/images/9999"
+
+virt-customize --install qemu-guest-agent -a "${IMAGES_PATH}/debian-12-generic-amd64.qcow2" 
+
+# export IMAGES_PATH="/var/lib/vz/images/9999" # defines the path where the images will be stored and change the path to it.
 
 cd ${IMAGES_PATH}
 
@@ -35,7 +46,7 @@ qm create ${TEMPLATE_ID} --name ${VM_NAME} --cpu ${QEMU_CPU_MODEL} --sockets ${V
 qm set ${TEMPLATE_ID} -onboot 1
 
 # Import Disk
-qm set ${TEMPLATE_ID} --scsi0 ${VM_STORAGE}:0,import-from=${VM_DISK_IMAGE}
+qm set ${TEMPLATE_ID} --scsi0 ${VM_STORAGE}:0,discard=on,ssd=1,format=qcow2,import-from=${VM_DISK_IMAGE}
 
 # Add Cloud-Init CD-ROM drive. This enables the VM to receive customization instructions during boot.
 qm set ${TEMPLATE_ID} --ide2 ${VM_STORAGE}:cloudinit --boot order=scsi0
@@ -46,7 +57,7 @@ qm set ${TEMPLATE_ID} --ipconfig0 ip=${CLOUD_INIT_IP} #--nameserver ${CLOUD_INIT
 # Cloud-init user-data
 qm set ${TEMPLATE_ID} --ciupgrade 1 --ciuser ${CLOUD_INIT_USER} --sshkeys ${CLOUD_INIT_SSHKEY}
 
-#Resize the disk to 50G
+#Resize the disk to 10G
 qm disk resize ${TEMPLATE_ID} scsi0 10G
 
 # Cloud-init regenerate ISO image, ensuring that the VM will properly initialize with the desired parameters.
