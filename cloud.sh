@@ -9,9 +9,9 @@ wget https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-generic-amd
 
 export IMAGES_PATH="/var/lib/vz/images/9999"
 
-virt-customize --install qemu-guest-agent -a "${IMAGES_PATH}/debian-12-generic-amd64.qcow2" 
+#virt-customize --install qemu-guest-agent -a "${IMAGES_PATH}/debian-12-generic-amd64.qcow2" 
 
-#virt-customize -a "${IMAGES_PATH}/debian-12-generic-amd64.qcow2" --install qemu-guest-agent --install resolvconf --install systemd-resolved --update --run-command 'mkdir -p /etc/network/interfaces.d' --run-command 'echo "auto ens18" >> /etc/network/interfaces.d/ens18' --run-command 'echo "iface ens18 inet manual" >> /etc/network/interfaces.d/ens18'
+virt-customize -a "${IMAGES_PATH}/debian-12-generic-amd64.qcow2" --install qemu-guest-agent --install resolvconf --install systemd-resolved --update --run-command 'mkdir -p /etc/network/interfaces.d' --run-command 'echo "auto ens18" >> /etc/network/interfaces.d/ens18' --run-command 'echo "iface ens18 inet dhcp" >> /etc/network/interfaces.d/ens18'
 
 # export IMAGES_PATH="/var/lib/vz/images/9999" # defines the path where the images will be stored and change the path to it.
 
