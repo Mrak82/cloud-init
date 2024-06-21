@@ -4,6 +4,12 @@ export IMAGES_PATH="/var/lib/vz/images/9999" # defines the path where the images
 
 cd ${IMAGES_PATH}
 
+## Debian 12 (bookworm)
+
+## https://cloud-images.ubuntu.com/
+
+# wget https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-generic-amd64.qcow2
+
 export QEMU_CPU_MODEL="host" # Specifies the CPU model to be used for the VM according your environment and the desired CPU capabilities.
 export VM_CPU_SOCKETS=1
 export VM_CPU_CORES=4
